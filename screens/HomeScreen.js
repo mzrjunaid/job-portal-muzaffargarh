@@ -1,11 +1,20 @@
 import React from "react";
+import { StatusBar } from "expo-status-bar";
+import { SafeAreaProvider } from "react-native-safe-area-context";
+
 import { StyleSheet, Text, View } from "react-native";
+import JobList from "../components/JobList";
+
+import { JOBS } from "../data/dummyData";
 
 const HomeScreen = () => {
   return (
-    <View style={styles.screen}>
-      <Text>Home Page</Text>
-    </View>
+    <SafeAreaProvider>
+      <View style={styles.screen}>
+        <JobList listData={JOBS} />
+      </View>
+      <StatusBar style="light" />
+    </SafeAreaProvider>
   );
 };
 
@@ -14,7 +23,8 @@ export default HomeScreen;
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
-    justifyContent: "center",
+    backgroundColor: "#f5f5f5",
     alignItems: "center",
+    padding: 10,
   },
 });

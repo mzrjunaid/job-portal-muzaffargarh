@@ -1,11 +1,27 @@
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
+import { createStackNavigator } from "@react-navigation/stack";
+
+import HomeScreen from "../screens/HomeScreen";
+import Colors from "../constents/Colors";
+
+const Stack = createStackNavigator();
 
 const JobsNavigator = () => {
   return (
-    <View style={styles.screen}>
-      <Text>Jobs Navigator Screen</Text>
-    </View>
+    <Stack.Navigator>
+      <Stack.Screen
+        name="Home"
+        component={HomeScreen}
+        options={{
+          headerTitle: "Job Portal Muzaffargarh",
+          headerTitleAlign: "center",
+          headerTintColor: Colors.primaryText,
+          headerStyle: { backgroundColor: Colors.primary },
+          headerMode: "screen",
+        }}
+      />
+    </Stack.Navigator>
   );
 };
 
