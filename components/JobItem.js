@@ -2,11 +2,17 @@ import React from "react";
 import { ListItem } from "@rneui/themed";
 import { StyleSheet, Text, View } from "react-native";
 import Colors from "../constents/Colors";
+import { useNavigation } from "@react-navigation/native";
 
 const JobItem = (props) => {
+  const navigation = useNavigation();
   return (
     <View style={styles.jobItem}>
-      <ListItem onPress={() => {}}>
+      <ListItem
+        onPress={() => {
+          navigation.navigate("JobDetail", { jobId: props.id });
+        }}
+      >
         <ListItem.Content>
           <ListItem.Title
             style={styles.jobTitle}

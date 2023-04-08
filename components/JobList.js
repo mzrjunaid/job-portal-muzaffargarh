@@ -5,7 +5,14 @@ import { StyleSheet } from "react-native";
 
 const JobList = ({ listData }) => {
   const renderJobItem = (itemData) => {
-    return <JobItem title={itemData.item.jobTitle} jobPlace={itemData.item.jobCities} publishDate={itemData.item.publishDate} />;
+    return (
+      <JobItem
+        id={itemData.item.id}
+        title={itemData.item.jobTitle}
+        jobPlace={itemData.item.jobCities}
+        publishDate={itemData.item.publishDate}
+      />
+    );
   };
   return (
     <View style={styles.list}>

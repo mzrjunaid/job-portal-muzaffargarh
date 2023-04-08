@@ -2,6 +2,7 @@ class Jobs {
   constructor(
     id,
     jobTitle,
+    imageUrl,
     jobCities,
     publishDate,
     lastDate,
@@ -15,6 +16,7 @@ class Jobs {
   ) {
     this.id = id;
     this.jobTitle = jobTitle;
+    this.imageUrl = imageUrl;
     this.jobCities = jobCities;
     this.publishDate = publishDate;
     this.lastDate = lastDate;

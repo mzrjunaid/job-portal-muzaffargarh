@@ -4,6 +4,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 
 import HomeScreen from "../screens/HomeScreen";
 import Colors from "../constents/Colors";
+import JobDetailScreen from "../screens/JobDetailScreen";
 
 const Stack = createStackNavigator();
 
@@ -15,6 +16,17 @@ const JobsNavigator = () => {
         component={HomeScreen}
         options={{
           headerTitle: "Job Portal Muzaffargarh",
+          headerTitleAlign: "center",
+          headerTintColor: Colors.primaryText,
+          headerStyle: { backgroundColor: Colors.primary },
+          headerMode: "screen",
+        }}
+      />
+      <Stack.Screen
+        name="JobDetail"
+        component={JobDetailScreen}
+        options={{
+          headerTitle: "Job Detail",
           headerTitleAlign: "center",
           headerTintColor: Colors.primaryText,
           headerStyle: { backgroundColor: Colors.primary },
