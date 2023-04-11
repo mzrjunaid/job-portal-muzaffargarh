@@ -1,7 +1,6 @@
 import React from "react";
-import { FlatList, View } from "react-native";
+import { StyleSheet, FlatList, View } from "react-native";
 import JobItem from "./JobItem";
-import { StyleSheet } from "react-native";
 
 const JobList = ({ listData }) => {
   const renderJobItem = (itemData) => {
@@ -9,7 +8,7 @@ const JobList = ({ listData }) => {
       <JobItem
         id={itemData.item.id}
         title={itemData.item.jobTitle}
-        jobPlace={itemData.item.jobCities}
+        jobPlace={itemData.item.jobPlace}
         publishDate={itemData.item.publishDate}
       />
     );

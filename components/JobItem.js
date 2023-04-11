@@ -66,7 +66,7 @@ const styles = StyleSheet.create({
     marginBottom: 5,
   },
   jobSubtitle: {
-    color: Colors.accent,
+    color: Colors.accentText,
     fontWeight: "bold",
     fontSize: 16,
     width: "100%",

@@ -3,7 +3,7 @@ class Jobs {
     id,
     jobTitle,
     imageUrl,
-    jobCities,
+    jobPlace,
     publishDate,
     lastDate,
     jobType,
@@ -17,7 +17,7 @@ class Jobs {
     this.id = id;
     this.jobTitle = jobTitle;
     this.imageUrl = imageUrl;
-    this.jobCities = jobCities;
+    this.jobPlace = jobPlace;
     this.publishDate = publishDate;
     this.lastDate = lastDate;
     this.jobType = jobType;
