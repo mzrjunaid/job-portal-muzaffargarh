@@ -6,8 +6,10 @@ import {
   Dimensions,
   SafeAreaView,
   ScrollView,
+  Linking,
+  Alert,
 } from "react-native";
-import { Image, Divider, Button } from "@rneui/themed";
+import { Image, Divider, FAB } from "@rneui/themed";
 
 const windowWidth = Dimensions.get("window").width;
 
@@ -19,10 +21,55 @@ const JobDetailScreen = ({ route }) => {
   const filtered = JOBS.filter((item) => item.id === jobId);
   const selectedItem = filtered[0];
 
+  const sendWhatsApp = () => {
+    let msg =
+      "Job Title: *" +
+      selectedItem.jobTitle +
+      "*\n*Last Date:* " +
+      selectedItem.lastDate +
+      "\nWant to Apply for above job.";
+    let phoneWithCountryCode = "923088213605";
+
+    let mobile =
+      Platform.OS == "ios" ? phoneWithCountryCode : "+" + phoneWithCountryCode;
+    if (mobile) {
+      if (msg) {
+        let url = "whatsapp://send?text=" + msg + "&phone=" + mobile;
+        Linking.openURL(url)
+          .then()
+          .catch(() => {
+            alert("Make sure WhatsApp installed on your device");
+          });
+      } else {
+        alert("Please insert message to send");
+      }
+    } else {
+      alert("Please insert mobile no");
+    }
+  };
+
+  const confirmation = () => {
+    Alert.alert(
+      "Send Whatsapp Message",
+      "Kiya ap es job par Apply krna chahty hain?",
+      [
+        {
+          text: "No",
+          onPress: () => {},
+          style: "cancel",
+        },
+        {
+          text: "Yes",
+          onPress: sendWhatsApp,
+        },
+      ]
+    );
+  };
+
   return (
-    <SafeAreaView>
+    <SafeAreaView style={styles.screen}>
       <ScrollView>
-        <View style={styles.screen}>
+        <View style={styles.container}>
           <View style={[styles.titleContainer, styles.shadowDefined]}>
             <Text style={styles.title}>{selectedItem.jobTitle}</Text>
           </View>
@@ -76,7 +123,7 @@ const JobDetailScreen = ({ route }) => {
               <Text style={styles.descText}>{selectedItem.domicile}</Text>
             </View>
           </View>
-          <Button
+          {/* <Button
             title="APPLY ONLINE"
             icon={{
               name: "whatsapp",
@@ -99,9 +146,21 @@ const JobDetailScreen = ({ route }) => {
               width: "100%",
               marginTop: 25,
             }}
-          />
+          /> */}
         </View>
       </ScrollView>
+      <FAB
+        visible={true}
+        onPress={confirmation}
+        placement="right"
+        icon={{
+          name: "whatsapp",
+          type: "font-awesome",
+          size: 24,
+          color: "white",
+        }}
+        color={Colors.primary}
+      />
     </SafeAreaView>
   );
 };
@@ -110,6 +169,9 @@ export default JobDetailScreen;
 
 const styles = StyleSheet.create({
   screen: {
+    flex: 1,
+  },
+  container: {
     flex: 1,
     paddingTop: 10,
     padding: 16,
