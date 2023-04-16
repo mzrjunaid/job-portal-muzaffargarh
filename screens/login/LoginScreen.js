@@ -5,9 +5,19 @@ import { SafeAreaProvider } from "react-native-safe-area-context";
 import Colors from "../../constents/Colors";
 import { Button, Card, Icon, Input, Text } from "@rneui/themed";
 
-import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
-import { initializeApp } from "firebase/app";
-import { firebaseConfig } from "../../firebase";
+// import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+// import { initializeApp } from "firebase/app";
+// import { firebaseConfig } from "../../firebase";
+
+import { useNavigation } from "@react-navigation/native";
+import { useDispatch } from "react-redux";
+import {
+  loginFailure,
+  loginRequest,
+  loginSuccess,
+} from "../../store/actions/auth";
+import { auth } from "../../firebase";
+import { signInWithEmailAndPassword } from "firebase/auth";
 
 const screenWidth = Dimensions.get("screen").width;
 
@@ -15,10 +25,16 @@ const LoginScreen = () => {
   const [isFocusedEmail, setIsFocusedEmail] = useState(false);
   const [isFocusedPassword, setIsFocusedPassword] = useState(false);
   const [email, setEmail] = useState("");
-  const [emailError, setEmailError] = useState("");
+  const [emailError, setEmailError] = useState(false);
   const [password, setPassword] = useState("");
-  const [passwordError, setPasswordError] = useState("");
+  // const [passwordError, setPasswordError] = useState("");
   const [wrongCredentials, setWrongCredentials] = useState(false);
+
+  // const app = initializeApp(firebaseConfig);
+  // const auth = getAuth(app);
+
+  const dispatch = useDispatch();
+  const navigation = useNavigation();
 
   const input_1 = useRef(null);
   const input_2 = useRef(null);
@@ -48,77 +64,66 @@ const LoginScreen = () => {
     return re.test(email);
   };
 
-  const passwordValidation = () => {
-    const hasSpecialChar = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/;
-    const hasLowerCase = /[a-z]/;
-    const hasUpperCase = /[A-Z]/;
+  // const passwordValidation = () => {
+  //   const hasSpecialChar = /[!@$&]/;
+  //   const hasLowerCase = /[a-z]/;
+  //   const hasUpperCase = /[A-Z]/;
 
-    if (password.length < 8) {
-      setPasswordError("Password should be 8 characters long");
-      return;
-    } else if (
-      !hasSpecialChar.test(password) ||
-      !hasLowerCase.test(password) ||
-      !hasUpperCase.test(password)
-    ) {
-      setPasswordError(
-        "Password should contain special character and 1 lowercase and 1 uppercase character"
+  //   if (password.length < 8) {
+  //     setPasswordError("Password should be 8 characters long");
+  //     return;
+  //   } else if (
+  //     !hasSpecialChar.test(password) ||
+  //     !hasLowerCase.test(password) ||
+  //     !hasUpperCase.test(password)
+  //   ) {
+  //     setPasswordError(
+  //       "Password should contain special character and 1 lowercase and 1 uppercase character"
+  //     );
+  //     return;
+  //   }
+  //   setPasswordError("");
+  // };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    dispatch(loginRequest());
+    try {
+      const userCredential = await signInWithEmailAndPassword(
+        auth,
+        email,
+        password
       );
-      return;
-    }
-    setPasswordError("");
-  };
-
-  const app = initializeApp(firebaseConfig);
-  const auth = getAuth(app);
-
-  const handleSignIn = () => {
-    signInWithEmailAndPassword(auth, email, password)
-      .then((userCredentials) => {
-        const user = userCredentials.user;
-        console.log("Logged in with: ", user.email);
-      })
-      .catch((error) => alert(error.message));
-  };
-
-  // access user Token
-
-  if (auth.currentUser) {
-    auth.currentUser
-      .getIdToken(true)
-      .then((token) => console.log(token))
-      .catch((error) => console.log(error.message));
-  }
-
-  const handleSignOut = () => {
-    if (auth.currentUser) {
-      auth
-        .signOut()
-        .then(console.log("Logged Out"))
-        .catch((error) => console.log(error.message));
-    } else {
-      console.log("Already Logged Out");
+      dispatch(loginSuccess(userCredential.user));
+      navigation.navigate("admin");
+    } catch (error) {
+      dispatch(loginFailure(error.message));
     }
   };
 
-  // console.log(
-  //   new Date(
-  //     new Date().getTime() +
-  //       parseInt(auth.currentUser.stsTokenManager.expirationTime) * 100
-  //   )
-  // );
-
-  //Token Expiration Date
-  // console.log(
-  //   new Date(auth.currentUser.stsTokenManager.expirationTime)
-  // );
+  // const handleSignIn = async () => {
+  //   try {
+  //     // await signInWithEmailAndPassword(auth, email, password);
+  //     navigation.replace("admin");
+  //   } catch (e) {
+  //     if (e.code == "auth/user-not-found") {
+  //       setWrongCredentials("User Not Found / Wrong Credentials");
+  //     } else if (e.code == "auth/wrong-password") {
+  //       setWrongCredentials("Please Check Password");
+  //     } else if (e.code == "auth/too-many-requests") {
+  //       setWrongCredentials("Too Many Wrong Attempts");
+  //     } else {
+  //       console.log(e.code);
+  //     }
+  //   }
+  // };
 
   return (
     <SafeAreaProvider>
       <View style={styles.screen}>
         <Card containerStyle={styles.formContainer}>
           <Card.Title style={{ fontSize: 28, color: Colors.primary }}>
-            Admin Page
+            ADMIN
           </Card.Title>
           <Card.Divider />
           <View style={styles.bottomMargin}>
@@ -171,15 +176,13 @@ const LoginScreen = () => {
               keyboardType="default"
               autoCapitalize="none"
               onChangeText={(value) => setPassword(value)}
-              onEndEditing={passwordValidation}
-              errorMessage={passwordError}
+              // onEndEditing={passwordValidation}
+              // errorMessage={passwordError}
             />
           </View>
           {wrongCredentials ? (
             <View style={styles.bottomMargin}>
-              <Text style={styles.wrongCredentials}>
-                Check Email or Password
-              </Text>
+              <Text style={styles.wrongCredentials}>{wrongCredentials}</Text>
             </View>
           ) : (
             ""
@@ -190,16 +193,8 @@ const LoginScreen = () => {
             uppercase
             titleStyle={{ fontSize: 24 }}
             color={Colors.primary}
-            onPress={handleSignIn}
-          />
-
-          <Button
-            title="Sign Out"
-            buttonStyle={styles.btn}
-            uppercase
-            titleStyle={{ fontSize: 24 }}
-            color={Colors.primary}
-            onPress={handleSignOut}
+            onPress={handleSubmit}
+            disabled={emailError ? true : false}
           />
         </Card>
       </View>

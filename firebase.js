@@ -1,4 +1,7 @@
-export const firebaseConfig = {
+import { initializeApp } from "firebase/app";
+import { getAuth } from "firebase/auth";
+
+const firebaseConfig = {
   apiKey: "AIzaSyBCcvHXqmQXvevzCOdJhWkCUtUxMZjE8g8",
   authDomain: "job-portal-muzaffargarh.firebaseapp.com",
   projectId: "job-portal-muzaffargarh",
@@ -7,3 +10,7 @@ export const firebaseConfig = {
   appId: "1:868158387944:web:1c21a3fbab170f5faefb5d",
   measurementId: "G-LPLNB2MSY0",
 };
+
+const app = initializeApp(firebaseConfig);
+
+export const auth = getAuth(app);
