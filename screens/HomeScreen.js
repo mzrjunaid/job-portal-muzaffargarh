@@ -9,8 +9,11 @@ import { JOBS } from "../data/dummyData";
 import { useLayoutEffect } from "react";
 import { Icon } from "@rneui/themed";
 import Colors from "../constents/Colors";
+import { useSelector } from "react-redux";
 
 const HomeScreen = ({ navigation }) => {
+  const ads = useSelector((state) => state.jobs.availablejobs);
+
   useLayoutEffect(() => {
     navigation.setOptions({
       headerLeft: () => (
@@ -30,7 +33,7 @@ const HomeScreen = ({ navigation }) => {
   return (
     <SafeAreaProvider>
       <View style={styles.screen}>
-        <JobList listData={JOBS} />
+        <JobList listData={ads} />
       </View>
       <StatusBar style="light" />
     </SafeAreaProvider>

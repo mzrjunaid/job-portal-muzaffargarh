@@ -13,13 +13,14 @@ import { Image, Divider, FAB } from "@rneui/themed";
 
 const windowWidth = Dimensions.get("window").width;
 
-import { JOBS } from "../data/dummyData";
 import Colors from "../constents/Colors";
+import { useSelector } from "react-redux";
 
 const JobDetailScreen = ({ route }) => {
   const { jobId } = route.params;
-  const filtered = JOBS.filter((item) => item.id === jobId);
-  const selectedItem = filtered[0];
+  const selectedItem = useSelector((state) =>
+    state.jobs.availablejobs.find((job) => job.id == jobId)
+  );
 
   const sendWhatsApp = () => {
     let msg =

@@ -16,9 +16,17 @@ import { useSelector } from "react-redux";
 import { View } from "react-native";
 import { Text } from "react-native";
 import { Icon, Image } from "@rneui/themed";
+import DataEntryScreen from "../screens/admin/DataEntryScreen";
 
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
+
+const defaultHeader = {
+  headerTitleAlign: "center",
+  headerTintColor: Colors.primaryText,
+  headerStyle: { backgroundColor: Colors.primary },
+  headerMode: "screen",
+};
 
 const PublicNavigator = () => {
   return (
@@ -26,24 +34,12 @@ const PublicNavigator = () => {
       <Stack.Screen
         name="Home"
         component={HomeScreen}
-        options={{
-          headerTitle: "Job Portal Muzaffargarh",
-          headerTitleAlign: "center",
-          headerTintColor: Colors.primaryText,
-          headerStyle: { backgroundColor: Colors.primary },
-          headerMode: "screen",
-        }}
+        options={defaultHeader}
       />
       <Stack.Screen
         name="JobDetail"
         component={JobDetailScreen}
-        options={{
-          headerTitle: "Job Detail",
-          headerTitleAlign: "center",
-          headerTintColor: Colors.primaryText,
-          headerStyle: { backgroundColor: Colors.primary },
-          headerMode: "screen",
-        }}
+        options={defaultHeader}
       />
     </Stack.Navigator>
   );
@@ -59,13 +55,12 @@ const AdminNavigator = () => {
             name="admin"
             component={AdminScreen}
             // initialParams={{ userLogin: UserSignIn }}
-            options={{
-              headerTitle: "Admin Page",
-              headerTitleAlign: "center",
-              headerTintColor: Colors.primaryText,
-              headerStyle: { backgroundColor: Colors.primary },
-              headerMode: "screen",
-            }}
+            options={defaultHeader}
+          />
+          <Stack.Screen
+            name="dataEntry"
+            component={DataEntryScreen}
+            options={defaultHeader}
           />
         </Stack.Group>
       ) : (
@@ -90,8 +85,8 @@ function CustomDrawerContent(props) {
           height: 150,
           justifyContent: "center",
           alignItems: "center",
-          overflow: 'hidden',
-          marginBottom: 25
+          overflow: "hidden",
+          marginBottom: 25,
         }}
       >
         <Image

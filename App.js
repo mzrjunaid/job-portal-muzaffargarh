@@ -13,13 +13,13 @@ import { NavigationContainer } from "@react-navigation/native";
 import JobsNavigator from "./navigation/JobsNavigator";
 
 import authReducer from "./store/reducers/auth";
-import testReducer from "./store/reducers/testing";
+import jobsReducer from "./store/reducers/ads";
 
 enableScreens();
 
 const rootReducer = combineReducers({
   auth: authReducer,
-  test: testReducer,
+  jobs: jobsReducer,
 });
 
 const store = createStore(rootReducer, applyMiddleware(ReduxThunk));

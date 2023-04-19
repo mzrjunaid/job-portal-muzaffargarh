@@ -1,6 +1,6 @@
 import Jobs from "../models/Jobs";
 
-export const JOBS = [
+const JOBS = [
   new Jobs(
     1,
     "Allama Iqbal Open University Jobs",
@@ -62,3 +62,5 @@ export const JOBS = [
     "Muzaffargarh, Punjab"
   ),
 ];
+
+export default JOBS;

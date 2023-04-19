@@ -3,12 +3,7 @@ import { StyleSheet, Text, View } from "react-native";
 import { Dropdown } from "react-native-element-dropdown";
 import AntDesign from "@expo/vector-icons/AntDesign";
 
-const DropdownButton = ({
-  dropdownLabel,
-  dropdownData,
-  getValue,
-  iconName,
-}) => {
+const DropdownButton = ({ dropdownLabel, dropdownData, getValue }) => {
   const [value, setValue] = useState(null);
   const [isFocus, setIsFocus] = useState(false);
 
@@ -55,14 +50,6 @@ const DropdownButton = ({
         onFocus={() => setIsFocus(true)}
         onBlur={() => setIsFocus(false)}
         onChange={handleDropdownChange}
-        renderLeftIcon={() => (
-          <AntDesign
-            style={styles.icon}
-            color={isFocus ? "blue" : "black"}
-            name={iconName}
-            size={20}
-          />
-        )}
       />
     </View>
   );

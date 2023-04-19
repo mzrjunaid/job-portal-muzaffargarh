@@ -18,6 +18,7 @@ import {
 } from "../../store/actions/auth";
 import { auth } from "../../firebase";
 import { signInWithEmailAndPassword } from "firebase/auth";
+import { KeyboardAvoidingView } from "react-native";
 
 const screenWidth = Dimensions.get("screen").width;
 
