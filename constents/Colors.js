@@ -4,4 +4,5 @@ export default Colors = {
   accent: "#D9D9D9",
   primaryText: "#fff",
   accentText: "#808080",
+  inputBorderColor: "#808080",
 };

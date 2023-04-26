@@ -1,12 +1,18 @@
-import { Input } from "@rneui/themed";
-import React, { useLayoutEffect, useRef } from "react";
-import { useState } from "react";
-import { KeyboardAvoidingView } from "react-native";
-import { View, ScrollView, StyleSheet } from "react-native";
+import { Button, Input } from "@rneui/themed";
+import React, { useLayoutEffect, useState, useRef } from "react";
+import {
+  KeyboardAvoidingView,
+  View,
+  ScrollView,
+  StyleSheet,
+  TouchableWithoutFeedback,
+  Keyboard,
+} from "react-native";
 import Colors from "../../constents/Colors";
-import { TouchableWithoutFeedback } from "react-native";
-import { Keyboard } from "react-native";
 import DropdownButton from "../../components/DropdownButton";
+import DatePicker from "../../components/DatePicker";
+import { Text } from "react-native";
+import { useCallback } from "react";
 
 const data = [
   { label: "Item 1", value: "1" },
@@ -21,30 +27,28 @@ const data = [
 
 const DataEntryScreen = ({ navigation }) => {
   const [formError, setFormError] = useState(false);
+
   const [title, setTitle] = useState("");
   const [titleError, setTitleError] = useState("");
-  const [selectedPurpose, setSelectedPurpose] = useState(null);
+
+  const [vacancies, setVacancies] = useState("");
+  const [vacanciesError, setVacanciesError] = useState("");
+
+  const [jobPlace, setJobPlace] = useState("");
+  const [jobType, setJobType] = useState("");
+  const [education, setEducation] = useState("");
+  const [experience, setExperience] = useState("");
+  const [gender, setGender] = useState("");
+  const [ageLimit, setAgeLimit] = useState("");
+  const [domicile, setDomicile] = useState("");
+
+  const [publishDate, setPublishDate] = useState(new Date());
+  const [lastDate, setLastDate] = useState(new Date());
+
+  const [show, setShow] = useState(false);
 
   const input_1 = useRef(null);
   const input_2 = useRef(null);
-  const input_3 = useRef(null);
-  const input_4 = useRef(null);
-  const input_5 = useRef(null);
-  const input_6 = useRef(null);
-  const input_7 = useRef(null);
-  const input_8 = useRef(null);
-  const input_9 = useRef(null);
-  const input_10 = useRef(null);
-  const input_11 = useRef(null);
-  const input_12 = useRef(null);
-
-  const titleValidation = () => {
-    if (title.length === 0) {
-      setTitleError("Title Cannot be blank");
-      setFormError(true);
-    }
-    setFormError(false);
-  };
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -52,13 +56,93 @@ const DataEntryScreen = ({ navigation }) => {
     });
   }, [navigation]);
 
-  const dropDownValue = (value) => {
-    setSelectedPurpose(value);
-    console.log(value);
+  const jobPlaceHandler = (value) => {
+    setJobPlace(value);
   };
-  const dropDownValue2 = (value) => {
-    setSelectedPurpose(value);
-    console.log(value);
+
+  const jobTypeHandler = (value) => {
+    setJobType(value);
+  };
+
+  const educationHandler = (value) => {
+    setEducation(value);
+  };
+
+  const experienceHandler = (value) => {
+    setExperience(value);
+  };
+
+  const genderHandler = (value) => {
+    setGender(value);
+  };
+
+  const ageLimitHandler = (value) => {
+    setAgeLimit(value);
+  };
+
+  const domicileHandler = (value) => {
+    setDomicile(value);
+  };
+
+  const getPublishDate = (date) => {
+    setPublishDate(date);
+  };
+
+  const getLastDate = (date) => {
+    setLastDate(date);
+  };
+
+  const titleValidation = () => {
+    if (title.length === 0) {
+      setTitleError("Title Cannot be blank");
+      setFormError(true);
+    } else {
+      setTitleError("");
+      setFormError(false);
+    }
+  };
+
+  const vacancyValidation = () => {
+    if (vacancies <= 0) {
+      setVacanciesError("Vacancies Cannot be less than 0");
+      setFormError(true);
+    } else {
+      setVacanciesError("");
+      setFormError(false);
+    }
+  };
+
+  const formSubmitHandler = () => {
+    options = { weekday: 'long', year: "numeric", month: "long", day: "numeric" };
+    const formData = {
+      title: title,
+      vacancies: vacancies,
+      jobPlace: jobPlace,
+      jobType: jobType,
+      education: education,
+      experience: experience,
+      gender: gender,
+      ageLimit: ageLimit,
+      domicile: domicile,
+      publishDate: publishDate.toLocaleDateString("en-GB", options),
+      lastDate: lastDate.toDateString(),
+    };
+    return (
+      <View style={[styles.form, { marginTop: 20 }]}>
+        <Text>Review</Text>
+        <Text>{formData.title}</Text>
+        <Text>{formData.publishDate}</Text>
+        <Text>{jobPlace}</Text>
+        <Text>{jobType}</Text>
+        <Text>{education}</Text>
+        <Text>{experience}</Text>
+        <Text>{gender}</Text>
+        <Text>{ageLimit}</Text>
+        <Text>{domicile}</Text>
+        <Text>{publishDate.toDateString()}</Text>
+        <Text>{lastDate.toDateString()}</Text>
+      </View>
+    );
   };
 
   return (
@@ -69,78 +153,88 @@ const DataEntryScreen = ({ navigation }) => {
             <View style={styles.form}>
               <Input
                 ref={input_1}
+                required
                 onFocus={() => {}}
                 onBlur={() => {}}
-                label="Advertisement Title:"
+                label="Advertisement Title"
                 labelStyle={{ color: Colors.primary }}
+                inputStyle={{ paddingHorizontal: 8 }}
+                inputContainerStyle={styles.inputStyle}
                 placeholder="Enter text here..."
-                leftIconContainerStyle={{ marginRight: 8 }}
-                // inputContainerStyle={inputStyleEmail}
-                required
-                email
-                keyboardType="email-address"
-                autoCapitalize="none"
+                keyboardType="default"
+                autoCapitalize="sentences"
                 onChangeText={(value) => setTitle(value)}
                 onEndEditing={titleValidation}
                 onSubmitEditing={() => {
                   input_2.current.focus();
                 }}
-                // blurOnSubmit={false}
                 errorMessage={titleError}
+                value={title}
               />
               <Input
                 ref={input_2}
+                required
                 onFocus={() => {}}
                 onBlur={() => {}}
-                label="Job Type:"
+                label="No of vacancies"
                 labelStyle={{ color: Colors.primary }}
+                inputStyle={{ paddingHorizontal: 8 }}
+                inputContainerStyle={styles.inputStyle}
                 placeholder="Enter text here..."
-                leftIconContainerStyle={{ marginRight: 8 }}
-                // inputContainerStyle={inputStyleEmail}
-                required
-                keyboardType="default"
-                autoCapitalize="sentences"
-                onChangeText={(value) => setTitle(value)}
-                // onEndEditing={handleEmailValidation}
-                onSubmitEditing={() => {
-                  input_3.current.focus();
-                }}
-                // blurOnSubmit={false}
-                // errorMessage={emailError}
-              />
-              <Input
-                ref={input_3}
-                onFocus={() => {}}
-                onBlur={() => {}}
-                label="Job Place:"
-                labelStyle={{ color: Colors.primary }}
-                placeholder="Enter text here..."
-                leftIconContainerStyle={{ marginRight: 8 }}
-                // inputContainerStyle={inputStyleEmail}
-                required
-                email
-                keyboardType="email-address"
+                keyboardType="number-pad"
                 autoCapitalize="none"
-                onChangeText={(value) => setTitle(value)}
-                // onEndEditing={handleEmailValidation}
-                onSubmitEditing={() => {
-                  //   input_2.current.focus();
-                }}
-                // blurOnSubmit={false}
-                // errorMessage={emailError}
+                onChangeText={(value) => setVacancies(value)}
+                onEndEditing={vacancyValidation}
+                errorMessage={vacanciesError}
+                value={vacancies}
+              />
+              <DropdownButton
+                dropdownData={data}
+                dropdownLabel="Job Place"
+                getValue={jobPlaceHandler}
+              />
+              <DropdownButton
+                dropdownData={data}
+                dropdownLabel="Job Type"
+                getValue={jobTypeHandler}
+              />
+              <DropdownButton
+                dropdownData={data}
+                dropdownLabel="Education"
+                getValue={educationHandler}
+              />
+              <DropdownButton
+                dropdownData={data}
+                dropdownLabel="Experience"
+                getValue={experienceHandler}
+              />
+              <DropdownButton
+                dropdownData={data}
+                dropdownLabel="Gender"
+                getValue={genderHandler}
+              />
+              <DropdownButton
+                dropdownData={data}
+                dropdownLabel="Age Limit"
+                getValue={ageLimitHandler}
+              />
+              <DropdownButton
+                dropdownData={data}
+                dropdownLabel="Domicile"
+                getValue={domicileHandler}
               />
 
-              <DropdownButton
-                dropdownData={data}
-                dropdownLabel="No of Vacancies: "
-                getValue={dropDownValue}
-              />
-              <DropdownButton
-                dropdownData={data}
-                dropdownLabel="No of Vacancies: "
-                getValue={dropDownValue2}
+              <DatePicker label="Publish" getDate={getPublishDate} />
+              <DatePicker label="Last Date" getDate={getLastDate} />
+              <Button
+                title="Submit"
+                onPress={formSubmitHandler}
+                color={Colors.primary}
+                titleStyle={styles.submitButton}
+                containerStyle={styles.buttonContainer}
               />
             </View>
+            {formSubmitHandler()}
           </View>
         </ScrollView>
       </TouchableWithoutFeedback>
@@ -171,6 +265,21 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.35,
     shadowRadius: 10,
     elevation: 2,
-    paddingVertical: 30,
+    paddingTop: 20,
+    paddingBottom: 10,
+    paddingHorizontal: 10,
+  },
+  inputStyle: {
+    borderBottomWidth: 0.5,
+  },
+  submitButton: {
+    textTransform: "uppercase",
+    fontWeight: "bold",
+    letterSpacing: 0.8,
+  },
+  buttonContainer: {
+    marginTop: 20,
+    width: "50%",
+    alignSelf: "center",
   },
 });

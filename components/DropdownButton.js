@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { Dropdown } from "react-native-element-dropdown";
-import AntDesign from "@expo/vector-icons/AntDesign";
+import Colors from "../constents/Colors";
 
 const DropdownButton = ({ dropdownLabel, dropdownData, getValue }) => {
   const [value, setValue] = useState(null);
@@ -23,21 +23,14 @@ const DropdownButton = ({ dropdownLabel, dropdownData, getValue }) => {
   }, [value]);
 
   const renderLabel = () => {
-    if (value || isFocus) {
-      return (
-        <Text style={[styles.label, isFocus && { color: "blue" }]}>
-          {dropdownLabel}
-        </Text>
-      );
-    }
-    return null;
+    return <Text style={styles.label}>{dropdownLabel}</Text>;
   };
 
   return (
     <View style={styles.container}>
       {renderLabel()}
       <Dropdown
-        style={[styles.dropdown, isFocus && { borderColor: "blue" }]}
+        style={[styles.dropdown, isFocus && { borderColor: Colors.primary }]}
         placeholderStyle={styles.placeholderStyle}
         selectedTextStyle={styles.selectedTextStyle}
         inputSearchStyle={styles.inputSearchStyle}
@@ -48,7 +41,11 @@ const DropdownButton = ({ dropdownLabel, dropdownData, getValue }) => {
         valueField="value"
         placeholder={!isFocus ? `Select ${dropdownLabel}...` : "..."}
         onFocus={() => setIsFocus(true)}
-        onBlur={() => setIsFocus(false)}
+        onBlur={() => {
+          setIsFocus(false);
+          if (!value) {
+          }
+        }}
         onChange={handleDropdownChange}
       />
     </View>
@@ -59,30 +56,28 @@ export default DropdownButton;
 
 const styles = StyleSheet.create({
   container: {
-    width: 400,
     backgroundColor: "white",
-    padding: 16,
+    paddingHorizontal: 10,
+    marginBottom: 10,
   },
   dropdown: {
     height: 50,
-    borderColor: "gray",
-    borderWidth: 0.5,
-    borderRadius: 8,
+    borderColor: Colors.inputBorderColor,
+    borderBottomWidth: 0.5,
     paddingHorizontal: 8,
   },
   icon: {
     marginRight: 5,
   },
   label: {
-    position: "absolute",
     backgroundColor: "white",
-    left: 22,
-    top: 8,
     zIndex: 999,
-    paddingHorizontal: 8,
-    fontSize: 14,
+    fontSize: 16,
+    color: Colors.primary,
+    fontWeight: "bold",
   },
   placeholderStyle: {
+    color: Colors.accentText,
     fontSize: 16,
   },
   selectedTextStyle: {
@@ -91,9 +86,5 @@ const styles = StyleSheet.create({
   iconStyle: {
     width: 20,
     height: 20,
-  },
-  inputSearchStyle: {
-    height: 40,
-    fontSize: 16,
   },
 });
