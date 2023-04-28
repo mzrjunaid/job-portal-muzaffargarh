@@ -113,7 +113,12 @@ const DataEntryScreen = ({ navigation }) => {
   };
 
   const formSubmitHandler = () => {
-    options = { weekday: 'long', year: "numeric", month: "long", day: "numeric" };
+    options = {
+      weekday: "long",
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    };
     const formData = {
       title: title,
       vacancies: vacancies,
@@ -125,22 +130,22 @@ const DataEntryScreen = ({ navigation }) => {
       ageLimit: ageLimit,
       domicile: domicile,
       publishDate: publishDate.toLocaleDateString("en-GB", options),
-      lastDate: lastDate.toDateString(),
+      lastDate: lastDate.toLocaleDateString("en-GB", options),
     };
     return (
       <View style={[styles.form, { marginTop: 20 }]}>
         <Text>Review</Text>
         <Text>{formData.title}</Text>
+        <Text>{formData.vacancies}</Text>
+        <Text>{formData.jobPlace}</Text>
+        <Text>{formData.jobType}</Text>
+        <Text>{formData.education}</Text>
+        <Text>{formData.experience}</Text>
+        <Text>{formData.gender}</Text>
+        <Text>{formData.ageLimit}</Text>
+        <Text>{formData.domicile}</Text>
         <Text>{formData.publishDate}</Text>
-        <Text>{jobPlace}</Text>
-        <Text>{jobType}</Text>
-        <Text>{education}</Text>
-        <Text>{experience}</Text>
-        <Text>{gender}</Text>
-        <Text>{ageLimit}</Text>
-        <Text>{domicile}</Text>
-        <Text>{publishDate.toDateString()}</Text>
-        <Text>{lastDate.toDateString()}</Text>
+        <Text>{formData.lastDate}</Text>
       </View>
     );
   };
