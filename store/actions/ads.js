@@ -16,3 +16,42 @@ export const fetchAds = () => {
     }
   };
 };
+
+export const createAds = (
+  id,
+  title,
+  imageUrl,
+  jobPlace,
+  publishDate,
+  lastDate,
+  jobType,
+  vacancies,
+  education,
+  ageLimit,
+  gender,
+  experience,
+  domicile
+) => {
+  return async (dispatch, getState) => {
+    const userId = getState().auth.userId;
+
+    dispatch({
+      type: CREATE_AD,
+      adData: {
+        id: id,
+        title: title,
+        imageUrl: imageUrl,
+        jobPlace: jobPlace,
+        publishDate: publishDate,
+        lastDate: lastDate,
+        jobType: jobType,
+        vacancies: vacancies,
+        education: education,
+        ageLimit: ageLimit,
+        gender: gender,
+        experience: experience,
+        domicile: domicile,
+      },
+    });
+  };
+};

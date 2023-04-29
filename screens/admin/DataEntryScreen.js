@@ -1,4 +1,4 @@
-import { Button, Input } from "@rneui/themed";
+import { Button, Image, Input } from "@rneui/themed";
 import React, { useLayoutEffect, useState, useRef } from "react";
 import {
   KeyboardAvoidingView,
@@ -7,12 +7,18 @@ import {
   StyleSheet,
   TouchableWithoutFeedback,
   Keyboard,
+  Text,
 } from "react-native";
+
+import { useCallback } from "react";
+import { useDispatch } from "react-redux";
+import * as adsActions from "../../store/actions/ads";
+
 import Colors from "../../constents/Colors";
+
 import DropdownButton from "../../components/DropdownButton";
 import DatePicker from "../../components/DatePicker";
-import { Text } from "react-native";
-import { useCallback } from "react";
+import ImagePickerButton from "../../components/ImagePicker";
 
 const data = [
   { label: "Item 1", value: "1" },
@@ -45,10 +51,14 @@ const DataEntryScreen = ({ navigation }) => {
   const [publishDate, setPublishDate] = useState(new Date());
   const [lastDate, setLastDate] = useState(new Date());
 
+  const [imageUrl, setImageUrl] = useState("");
+
   const [show, setShow] = useState(false);
 
   const input_1 = useRef(null);
   const input_2 = useRef(null);
+
+  const dispatch = useDispatch();
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -112,7 +122,12 @@ const DataEntryScreen = ({ navigation }) => {
     }
   };
 
-  const formSubmitHandler = () => {
+  const pickedImageHandler = (imageUrl) => {
+    const imgUri = imageUrl.assets[0].uri;
+    setImageUrl(imgUri);
+  };
+
+  const formSubmitHandler = async () => {
     options = {
       weekday: "long",
       year: "numeric",
@@ -131,24 +146,95 @@ const DataEntryScreen = ({ navigation }) => {
       domicile: domicile,
       publishDate: publishDate.toLocaleDateString("en-GB", options),
       lastDate: lastDate.toLocaleDateString("en-GB", options),
+      imageUrl: imageUrl,
     };
-    return (
-      <View style={[styles.form, { marginTop: 20 }]}>
-        <Text>Review</Text>
-        <Text>{formData.title}</Text>
-        <Text>{formData.vacancies}</Text>
-        <Text>{formData.jobPlace}</Text>
-        <Text>{formData.jobType}</Text>
-        <Text>{formData.education}</Text>
-        <Text>{formData.experience}</Text>
-        <Text>{formData.gender}</Text>
-        <Text>{formData.ageLimit}</Text>
-        <Text>{formData.domicile}</Text>
-        <Text>{formData.publishDate}</Text>
-        <Text>{formData.lastDate}</Text>
-      </View>
-    );
+
+    console.log(formData);
+
+    try {
+      await dispatch(
+        adsActions.createAds(
+          7,
+          formData.title,
+          formData.imageUrl,
+          formData.jobPlace,
+          formData.publishDate,
+          formData.lastDate,
+          formData.jobType,
+          formData.vacancies,
+          formData.education,
+          formData.ageLimit,
+          formData.gender,
+          formData.experience,
+          formData.domicile
+        )
+      );
+    } catch (error) {
+      console.log(error);
+    }
   };
+
+  //   options = {
+  //     weekday: "long",
+  //     year: "numeric",
+  //     month: "long",
+  //     day: "numeric",
+  //   };
+  //   const formData = {
+  //     title: title,
+  //     vacancies: vacancies,
+  //     jobPlace: jobPlace,
+  //     jobType: jobType,
+  //     education: education,
+  //     experience: experience,
+  //     gender: gender,
+  //     ageLimit: ageLimit,
+  //     domicile: domicile,
+  //     publishDate: publishDate.toLocaleDateString("en-GB", options),
+  //     lastDate: lastDate.toLocaleDateString("en-GB", options),
+  //     imageUrl: imageUrl,
+  //   };
+
+  //   const addJob = new Jobs(
+  //     formData.title,
+  //     formData.imageUrl,
+  //     formData.jobPlace,
+  //     formData.publishDate,
+  //     formData.lastDate,
+  //     formData.jobType,
+  //     formData.vacancies,
+  //     formData.education,
+  //     formData.ageLimit,
+  //     formData.gender,
+  //     formData.experience,
+  //     formData.domicile
+  //   );
+
+  //   console.log(addJob);
+
+  //   // return (
+  //   //   <View style={[styles.form, { marginTop: 20 }]}>
+  //   //     <Text>Review</Text>
+  //   //     <Text>{formData.title}</Text>
+  //   //     <Text>{formData.vacancies}</Text>
+  //   //     <Text>{formData.jobPlace}</Text>
+  //   //     <Text>{formData.jobType}</Text>
+  //   //     <Text>{formData.education}</Text>
+  //   //     <Text>{formData.experience}</Text>
+  //   //     <Text>{formData.gender}</Text>
+  //   //     <Text>{formData.ageLimit}</Text>
+  //   //     <Text>{formData.domicile}</Text>
+  //   //     <Text>{formData.publishDate}</Text>
+  //   //     <Text>{formData.lastDate}</Text>
+  //   //     {formData.imageUrl && (
+  //   //       <Image
+  //   //         source={{ uri: formData.imageUrl }}
+  //   //         style={{ width: "100%", height: 300 }}
+  //   //       />
+  //   //     )}
+  //   //   </View>
+  //   // );
+  // });
 
   return (
     <KeyboardAvoidingView style={styles.screen} behavior="height">
@@ -231,6 +317,7 @@ const DataEntryScreen = ({ navigation }) => {
 
               <DatePicker label="Publish" getDate={getPublishDate} />
               <DatePicker label="Last Date" getDate={getLastDate} />
+              <ImagePickerButton pickedImage={pickedImageHandler} />
               <Button
                 title="Submit"
                 onPress={formSubmitHandler}
@@ -239,7 +326,6 @@ const DataEntryScreen = ({ navigation }) => {
                 containerStyle={styles.buttonContainer}
               />
             </View>
-            {formSubmitHandler()}
           </View>
         </ScrollView>
       </TouchableWithoutFeedback>

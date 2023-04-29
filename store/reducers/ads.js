@@ -1,7 +1,7 @@
 import JOBS from "../../data/dummyData";
 import Jobs from "../../models/Jobs";
 
-import { GET_AD } from "../actions/ads";
+import { CREATE_AD, GET_AD } from "../actions/ads";
 
 const initialState = {
   availablejobs: JOBS,
@@ -15,20 +15,28 @@ export default (state = initialState, action) => {
         availableProducts: action.products,
         userProducts: action.userProducts,
       };
-    //   case CREATE_PRODUCT:
-    //     const newProduct = new Product(
-    //       action.productData.id,
-    //       action.productData.ownerId,
-    //       action.productData.title,
-    //       action.productData.imageUrl,
-    //       action.productData.description,
-    //       action.productData.price
-    //     );
-    //     return {
-    //       ...state,
-    //       availableProducts: state.availableProducts.concat(newProduct),
-    //       userProducts: state.userProducts.concat(newProduct),
-    //     };
+    case CREATE_AD:
+      console.log(action);
+      const newAd = new Jobs(
+        action.adData.id,
+        action.adData.title,
+        action.adData.imageUrl,
+        action.adData.jobPlace,
+        action.adData.publishDate,
+        action.adData.lastDate,
+        action.adData.jobType,
+        action.adData.vacancies,
+        action.adData.education,
+        action.adData.ageLimit,
+        action.adData.gender,
+        action.adData.experience,
+        action.adData.domicile
+      );
+      return {
+        ...state,
+        availablejobs: state.availablejobs.concat(newAd),
+        userProducts: state.userProducts.concat(newAd),
+      };
     //   case UPDATE_PRODUCT:
     //     const productIndex = state.userProducts.findIndex(
     //       (prod) => prod.id === action.pid
