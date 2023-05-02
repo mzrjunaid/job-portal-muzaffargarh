@@ -2,7 +2,7 @@ import React, { useLayoutEffect } from "react";
 import JobDetail from "../components/JobDetail";
 import { useSelector } from "react-redux";
 
-const JobDetailScreen = ({ route }) => {
+const JobDetailScreen = ({ route, navigation }) => {
   const { jobId } = route.params;
 
   useLayoutEffect(() => {
