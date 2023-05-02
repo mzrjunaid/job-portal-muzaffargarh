@@ -1,20 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { useLayoutEffect } from "react";
-import { StyleSheet, View, Text } from "react-native";
+import { Dimensions, ScrollView, StyleSheet, View, Text } from "react-native";
+import { SafeAreaProvider } from "react-native-safe-area-context";
+
+import { Icon, ListItem } from "@rneui/themed";
+import Colors from "../../constents/Colors";
 
 import { auth } from "../../firebase";
 
 import { useDispatch, useSelector } from "react-redux";
 import { loginSuccess, logout } from "../../store/actions/auth";
-import { ScrollView } from "react-native";
-import { SafeAreaView } from "react-native";
-import { Pressable } from "react-native";
-import { Dimensions } from "react-native";
-import { Icon, ListItem } from "@rneui/themed";
-import { SafeAreaProvider } from "react-native-safe-area-context";
-import Colors from "../../constents/Colors";
-import { Platform } from "react-native";
-import DataEntryScreen from "./DataEntryScreen";
 
 const screenWidth = Dimensions.get("screen").width;
 
