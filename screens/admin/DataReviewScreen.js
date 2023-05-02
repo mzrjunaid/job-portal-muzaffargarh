@@ -1,12 +1,12 @@
 import React from "react";
-import { StyleSheet } from "react-native";
+import { View, StyleSheet } from "react-native";
 
-import JobDetail from "../../components/JobDetail";
 import { Button } from "@rneui/themed";
 
 import { useDispatch } from "react-redux";
 import * as adsActions from "../../store/actions/ads";
-import { View } from "react-native";
+
+import JobDetail from "../../components/JobDetail";
 
 const DataReviewScreen = ({ route }) => {
   const { review } = route.params;
