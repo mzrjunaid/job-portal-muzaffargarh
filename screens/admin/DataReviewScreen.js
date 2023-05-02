@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useLayoutEffect } from "react";
 import { View, StyleSheet } from "react-native";
 
 import { Button } from "@rneui/themed";
@@ -8,12 +8,15 @@ import * as adsActions from "../../store/actions/ads";
 
 import JobDetail from "../../components/JobDetail";
 
-const DataReviewScreen = ({ route }) => {
+const DataReviewScreen = ({ route, navigation }) => {
   const { review } = route.params;
-
-  console.log(review);
-
   const dispatch = useDispatch();
+
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerTitle: "Data Review",
+    });
+  }, [navigation]);
 
   const formSubmitHandler = async () => {
     try {
@@ -45,10 +48,11 @@ const DataReviewScreen = ({ route }) => {
       <Button
         title="PUBLISH"
         onPress={formSubmitHandler}
-        titleStyle={{ fontWeight: "700" }}
+        titleStyle={{ fontWeight: "700", textTransform: "uppercase" }}
         buttonStyle={[
           {
             backgroundColor: Colors.primary,
+            borderRadius: 0,
           },
         ]}
         containerStyle={{

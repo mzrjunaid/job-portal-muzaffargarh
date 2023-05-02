@@ -2,20 +2,21 @@ import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 import {
   DrawerContentScrollView,
-  DrawerItem,
   DrawerItemList,
   createDrawerNavigator,
 } from "@react-navigation/drawer";
 
-import HomeScreen from "../screens/HomeScreen";
+import { View } from "react-native";
+import { Image } from "@rneui/themed";
+
+import { useSelector } from "react-redux";
+
 import Colors from "../constents/Colors";
+
+import HomeScreen from "../screens/HomeScreen";
 import JobDetailScreen from "../screens/JobDetailScreen";
 import AdminScreen from "../screens/admin/AdminScreen";
 import LoginScreen from "../screens/login/LoginScreen";
-import { useSelector } from "react-redux";
-import { View } from "react-native";
-import { Text } from "react-native";
-import { Icon, Image } from "@rneui/themed";
 import DataEntryScreen from "../screens/admin/DataEntryScreen";
 import DataReviewScreen from "../screens/admin/DataReviewScreen";
 
@@ -55,7 +56,6 @@ const AdminNavigator = () => {
           <Stack.Screen
             name="admin"
             component={AdminScreen}
-            // initialParams={{ userLogin: UserSignIn }}
             options={defaultHeader}
           />
           <Stack.Screen
@@ -71,11 +71,7 @@ const AdminNavigator = () => {
         </Stack.Group>
       ) : (
         <Stack.Group screenOptions={{ headerShown: false }}>
-          <Stack.Screen
-            name="Login"
-            component={LoginScreen}
-            // initialParams={{ userLogin: UserSignIn }}
-          />
+          <Stack.Screen name="Login" component={LoginScreen} />
         </Stack.Group>
       )}
     </Stack.Navigator>
