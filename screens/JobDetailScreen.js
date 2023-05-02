@@ -7,7 +7,7 @@ const JobDetailScreen = ({ route, navigation }) => {
 
   useLayoutEffect(() => {
     navigation.setOptions({
-      headerTitle: "Data Review",
+      headerTitle: "Advertisment Detail",
     });
   }, [navigation]);
 
