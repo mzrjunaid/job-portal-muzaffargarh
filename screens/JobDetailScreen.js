@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -17,10 +17,20 @@ import Colors from "../constents/Colors";
 import { useSelector } from "react-redux";
 
 const JobDetailScreen = ({ route }) => {
-  const { jobId } = route.params;
-  const selectedItem = useSelector((state) =>
-    state.jobs.availablejobs.find((job) => job.id == jobId)
-  );
+  const [selectedItem, setSelectedItem] = useState({});
+  const { jobId, review } = route.params;
+  const availablejobs = useSelector((state) => state.jobs.availablejobs);
+
+  useEffect(() => {
+    if (jobId) {
+      const item = availablejobs.find((job) => job.id === jobId);
+      setSelectedItem(item);
+    } else if (review) {
+      setSelectedItem(review);
+    }
+  }, [jobId, review]);
+
+  console.log(selectedItem);
 
   const sendWhatsApp = () => {
     let msg =

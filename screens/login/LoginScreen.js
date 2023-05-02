@@ -5,9 +5,6 @@ import { SafeAreaProvider } from "react-native-safe-area-context";
 import Colors from "../../constents/Colors";
 import { Button, Card, Icon, Input, Text } from "@rneui/themed";
 
-// import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
-// import { initializeApp } from "firebase/app";
-// import { firebaseConfig } from "../../firebase";
 
 import { useNavigation } from "@react-navigation/native";
 import { useDispatch } from "react-redux";
@@ -18,7 +15,6 @@ import {
 } from "../../store/actions/auth";
 import { auth } from "../../firebase";
 import { signInWithEmailAndPassword } from "firebase/auth";
-import { KeyboardAvoidingView } from "react-native";
 
 const screenWidth = Dimensions.get("screen").width;
 
@@ -30,9 +26,6 @@ const LoginScreen = () => {
   const [password, setPassword] = useState("");
   // const [passwordError, setPasswordError] = useState("");
   const [wrongCredentials, setWrongCredentials] = useState(false);
-
-  // const app = initializeApp(firebaseConfig);
-  // const auth = getAuth(app);
 
   const dispatch = useDispatch();
   const navigation = useNavigation();

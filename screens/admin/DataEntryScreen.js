@@ -34,7 +34,7 @@ const data = [
 const DataEntryScreen = ({ navigation }) => {
   const [formError, setFormError] = useState(false);
 
-  const [title, setTitle] = useState("");
+  const [jobTitle, setJobTitle] = useState("");
   const [titleError, setTitleError] = useState("");
 
   const [vacancies, setVacancies] = useState("");
@@ -103,7 +103,7 @@ const DataEntryScreen = ({ navigation }) => {
   };
 
   const titleValidation = () => {
-    if (title.length === 0) {
+    if (jobTitle.length === 0) {
       setTitleError("Title Cannot be blank");
       setFormError(true);
     } else {
@@ -127,7 +127,7 @@ const DataEntryScreen = ({ navigation }) => {
     setImageUrl(imgUri);
   };
 
-  const formSubmitHandler = async () => {
+  const formSubmitHandler = () => {
     options = {
       weekday: "long",
       year: "numeric",
@@ -135,7 +135,7 @@ const DataEntryScreen = ({ navigation }) => {
       day: "numeric",
     };
     const formData = {
-      title: title,
+      jobTitle: jobTitle,
       vacancies: vacancies,
       jobPlace: jobPlace,
       jobType: jobType,
@@ -148,32 +148,10 @@ const DataEntryScreen = ({ navigation }) => {
       lastDate: lastDate.toLocaleDateString("en-GB", options),
       imageUrl: imageUrl,
     };
-
-    console.log(formData);
-
-    try {
-      await dispatch(
-        adsActions.createAds(
-          7,
-          formData.title,
-          formData.imageUrl,
-          formData.jobPlace,
-          formData.publishDate,
-          formData.lastDate,
-          formData.jobType,
-          formData.vacancies,
-          formData.education,
-          formData.ageLimit,
-          formData.gender,
-          formData.experience,
-          formData.domicile
-        )
-      );
-    } catch (error) {
-      console.log(error);
-    }
+    navigation.navigate("JobDetail", { review: formData });
   };
 
+  // const formSubmitHandler = async () => {
   //   options = {
   //     weekday: "long",
   //     year: "numeric",
@@ -181,7 +159,7 @@ const DataEntryScreen = ({ navigation }) => {
   //     day: "numeric",
   //   };
   //   const formData = {
-  //     title: title,
+  //     jobTitle: jobTitle,
   //     vacancies: vacancies,
   //     jobPlace: jobPlace,
   //     jobType: jobType,
@@ -195,46 +173,30 @@ const DataEntryScreen = ({ navigation }) => {
   //     imageUrl: imageUrl,
   //   };
 
-  //   const addJob = new Jobs(
-  //     formData.title,
-  //     formData.imageUrl,
-  //     formData.jobPlace,
-  //     formData.publishDate,
-  //     formData.lastDate,
-  //     formData.jobType,
-  //     formData.vacancies,
-  //     formData.education,
-  //     formData.ageLimit,
-  //     formData.gender,
-  //     formData.experience,
-  //     formData.domicile
-  //   );
+  //   console.log(formData);
 
-  //   console.log(addJob);
-
-  //   // return (
-  //   //   <View style={[styles.form, { marginTop: 20 }]}>
-  //   //     <Text>Review</Text>
-  //   //     <Text>{formData.title}</Text>
-  //   //     <Text>{formData.vacancies}</Text>
-  //   //     <Text>{formData.jobPlace}</Text>
-  //   //     <Text>{formData.jobType}</Text>
-  //   //     <Text>{formData.education}</Text>
-  //   //     <Text>{formData.experience}</Text>
-  //   //     <Text>{formData.gender}</Text>
-  //   //     <Text>{formData.ageLimit}</Text>
-  //   //     <Text>{formData.domicile}</Text>
-  //   //     <Text>{formData.publishDate}</Text>
-  //   //     <Text>{formData.lastDate}</Text>
-  //   //     {formData.imageUrl && (
-  //   //       <Image
-  //   //         source={{ uri: formData.imageUrl }}
-  //   //         style={{ width: "100%", height: 300 }}
-  //   //       />
-  //   //     )}
-  //   //   </View>
-  //   // );
-  // });
+  //   try {
+  //     await dispatch(
+  //       adsActions.createAds(
+  //         7,
+  //         formData.title,
+  //         formData.imageUrl,
+  //         formData.jobPlace,
+  //         formData.publishDate,
+  //         formData.lastDate,
+  //         formData.jobType,
+  //         formData.vacancies,
+  //         formData.education,
+  //         formData.ageLimit,
+  //         formData.gender,
+  //         formData.experience,
+  //         formData.domicile
+  //       )
+  //     );
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
 
   return (
     <KeyboardAvoidingView style={styles.screen} behavior="height">
@@ -254,13 +216,13 @@ const DataEntryScreen = ({ navigation }) => {
                 placeholder="Enter text here..."
                 keyboardType="default"
                 autoCapitalize="sentences"
-                onChangeText={(value) => setTitle(value)}
+                onChangeText={(value) => setJobTitle(value)}
                 onEndEditing={titleValidation}
                 onSubmitEditing={() => {
                   input_2.current.focus();
                 }}
                 errorMessage={titleError}
-                value={title}
+                value={jobTitle}
               />
               <Input
                 ref={input_2}
