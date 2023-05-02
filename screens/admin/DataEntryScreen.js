@@ -1,4 +1,4 @@
-import { Button, Image, Input } from "@rneui/themed";
+import { Button, Input } from "@rneui/themed";
 import React, { useLayoutEffect, useState, useRef } from "react";
 import {
   KeyboardAvoidingView,
@@ -7,12 +7,7 @@ import {
   StyleSheet,
   TouchableWithoutFeedback,
   Keyboard,
-  Text,
 } from "react-native";
-
-import { useCallback } from "react";
-import { useDispatch } from "react-redux";
-import * as adsActions from "../../store/actions/ads";
 
 import Colors from "../../constents/Colors";
 
@@ -57,8 +52,6 @@ const DataEntryScreen = ({ navigation }) => {
 
   const input_1 = useRef(null);
   const input_2 = useRef(null);
-
-  const dispatch = useDispatch();
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -148,55 +141,8 @@ const DataEntryScreen = ({ navigation }) => {
       lastDate: lastDate.toLocaleDateString("en-GB", options),
       imageUrl: imageUrl,
     };
-    navigation.navigate("JobDetail", { review: formData });
+    navigation.navigate("dataReview", { review: formData });
   };
-
-  // const formSubmitHandler = async () => {
-  //   options = {
-  //     weekday: "long",
-  //     year: "numeric",
-  //     month: "long",
-  //     day: "numeric",
-  //   };
-  //   const formData = {
-  //     jobTitle: jobTitle,
-  //     vacancies: vacancies,
-  //     jobPlace: jobPlace,
-  //     jobType: jobType,
-  //     education: education,
-  //     experience: experience,
-  //     gender: gender,
-  //     ageLimit: ageLimit,
-  //     domicile: domicile,
-  //     publishDate: publishDate.toLocaleDateString("en-GB", options),
-  //     lastDate: lastDate.toLocaleDateString("en-GB", options),
-  //     imageUrl: imageUrl,
-  //   };
-
-  //   console.log(formData);
-
-  //   try {
-  //     await dispatch(
-  //       adsActions.createAds(
-  //         7,
-  //         formData.title,
-  //         formData.imageUrl,
-  //         formData.jobPlace,
-  //         formData.publishDate,
-  //         formData.lastDate,
-  //         formData.jobType,
-  //         formData.vacancies,
-  //         formData.education,
-  //         formData.ageLimit,
-  //         formData.gender,
-  //         formData.experience,
-  //         formData.domicile
-  //       )
-  //     );
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
 
   return (
     <KeyboardAvoidingView style={styles.screen} behavior="height">

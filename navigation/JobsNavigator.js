@@ -17,6 +17,7 @@ import { View } from "react-native";
 import { Text } from "react-native";
 import { Icon, Image } from "@rneui/themed";
 import DataEntryScreen from "../screens/admin/DataEntryScreen";
+import DataReviewScreen from "../screens/admin/DataReviewScreen";
 
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -60,6 +61,11 @@ const AdminNavigator = () => {
           <Stack.Screen
             name="dataEntry"
             component={DataEntryScreen}
+            options={defaultHeader}
+          />
+          <Stack.Screen
+            name="dataReview"
+            component={DataReviewScreen}
             options={defaultHeader}
           />
         </Stack.Group>
