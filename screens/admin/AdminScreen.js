@@ -89,14 +89,19 @@ const AdminScreen = ({ navigation }) => {
               </ListItem.Content>
               <ListItem.Chevron color={Colors.primary} size={28} />
             </ListItem>
-            <ListItem onPress={() => {}} style={styles.button}>
+            <ListItem
+              onPress={() => {
+                navigation.navigate("updateScreen");
+              }}
+              style={styles.button}
+            >
               <ListItem.Content>
                 <ListItem.Title
                   style={styles.jobTitle}
                   ellipsizeMode="tail"
                   numberOfLines={1}
                 >
-                  Add New Advertisement
+                  Update Add
                 </ListItem.Title>
               </ListItem.Content>
               <ListItem.Chevron color={Colors.primary} size={28} />

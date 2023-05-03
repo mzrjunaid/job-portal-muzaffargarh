@@ -5,7 +5,6 @@ import { SafeAreaProvider } from "react-native-safe-area-context";
 import { StyleSheet, View } from "react-native";
 import JobList from "../components/JobList";
 
-import { JOBS } from "../data/dummyData";
 import { useLayoutEffect } from "react";
 import { Icon } from "@rneui/themed";
 import Colors from "../constents/Colors";
@@ -33,7 +32,7 @@ const HomeScreen = ({ navigation }) => {
   return (
     <SafeAreaProvider>
       <View style={styles.screen}>
-        <JobList listData={ads} />
+        <JobList listData={ads} purpose="JobDetail" />
       </View>
       <StatusBar style="light" />
     </SafeAreaProvider>

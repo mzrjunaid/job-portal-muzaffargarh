@@ -2,7 +2,7 @@ import React from "react";
 import { StyleSheet, FlatList, View } from "react-native";
 import JobItem from "./JobItem";
 
-const JobList = ({ listData }) => {
+const JobList = ({ listData, purpose }) => {
   const renderJobItem = (itemData) => {
     return (
       <JobItem
@@ -10,6 +10,7 @@ const JobList = ({ listData }) => {
         title={itemData.item.jobTitle}
         jobPlace={itemData.item.jobPlace}
         publishDate={itemData.item.publishDate}
+        purpose={purpose}
       />
     );
   };

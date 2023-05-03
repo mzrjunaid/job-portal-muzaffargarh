@@ -4,13 +4,14 @@ import { StyleSheet, Text, View } from "react-native";
 import Colors from "../constents/Colors";
 import { useNavigation } from "@react-navigation/native";
 
-const JobItem = (props) => {
+const JobItem = ({ id, title, jobPlace, publishDate, purpose }) => {
   const navigation = useNavigation();
+
   return (
     <View style={styles.jobItem}>
       <ListItem
         onPress={() => {
-          navigation.navigate("JobDetail", { jobId: props.id });
+          navigation.navigate(purpose, { jobId: id });
         }}
       >
         <ListItem.Content>
@@ -19,10 +20,10 @@ const JobItem = (props) => {
             ellipsizeMode="tail"
             numberOfLines={1}
           >
-            {props.title}
+            {title}
           </ListItem.Title>
           <ListItem.Subtitle style={styles.jobSubtitle}>
-            <Text>{props.jobPlace}</Text>
+            <Text>{jobPlace}</Text>
             <Text
               style={{
                 fontWeight: "900",
@@ -33,7 +34,7 @@ const JobItem = (props) => {
               {" "}
               |{" "}
             </Text>
-            <Text style={styles.publishDate}>{props.publishDate}</Text>
+            <Text style={styles.publishDate}>{publishDate}</Text>
           </ListItem.Subtitle>
         </ListItem.Content>
         <ListItem.Chevron color={Colors.primary} size={28} />

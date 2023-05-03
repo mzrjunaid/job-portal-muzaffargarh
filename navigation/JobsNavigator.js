@@ -19,6 +19,8 @@ import AdminScreen from "../screens/admin/AdminScreen";
 import LoginScreen from "../screens/login/LoginScreen";
 import DataEntryScreen from "../screens/admin/DataEntryScreen";
 import DataReviewScreen from "../screens/admin/DataReviewScreen";
+import UpdateScreen from "../screens/admin/UpdateScreen";
+import UpdateDataEntryScreen from "../screens/admin/UpdateDataEntryScreen";
 
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -51,7 +53,7 @@ const AdminNavigator = () => {
   const userLogin = useSelector((state) => state.auth.isLogin);
   return (
     <Stack.Navigator initialRouteName="Login">
-      {userLogin ? (
+      {!userLogin ? (
         <Stack.Group>
           <Stack.Screen
             name="admin"
@@ -66,6 +68,16 @@ const AdminNavigator = () => {
           <Stack.Screen
             name="dataReview"
             component={DataReviewScreen}
+            options={defaultHeader}
+          />
+          <Stack.Screen
+            name="updateScreen"
+            component={UpdateScreen}
+            options={defaultHeader}
+          />
+          <Stack.Screen
+            name="update"
+            component={UpdateDataEntryScreen}
             options={defaultHeader}
           />
         </Stack.Group>
