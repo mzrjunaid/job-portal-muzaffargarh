@@ -53,7 +53,7 @@ const AdminNavigator = () => {
   const userLogin = useSelector((state) => state.auth.isLogin);
   return (
     <Stack.Navigator initialRouteName="Login">
-      {!userLogin ? (
+      {userLogin ? (
         <Stack.Group>
           <Stack.Screen
             name="admin"
